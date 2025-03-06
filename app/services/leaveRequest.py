@@ -16,12 +16,18 @@ class leaveRequest:
     @staticmethod
     def get_list(db: Session, token):
         user_id = get_token_payload(token.credentials).get('id')
-        if check_user(token, db):
-            leaveRequest = db.query(LeaveRequest).group_by(LeaveRequest.id ).all() or []
-        else:
-            leaveRequest = db.query(LeaveRequest).filter(LeaveRequest.employee_id == user_id) or []
-        return ResponseHandler.success("get list success", leaveRequest)
+
+        if check_user(token, db):  # Nếu là admin hoặc có quyền xem tất cả
+            leave_requests = db.query(LeaveRequest).group_by(LeaveRequest.id).all() or []
+        else:  # Nếu là nhân viên chỉ xem của mình
+            leave_requests = db.query(LeaveRequest).filter(LeaveRequest.employee_id == user_id).all() or []
         
+        print(leave_requests)  # Kiểm tra dữ liệu log
+
+        # Chuyển danh sách từ SQLAlchemy model -> Pydantic schema
+        leave_request_list = [LeaveRequestOut.model_validate(lr) for lr in leave_requests]
+
+        return ListLeaveRequest(message="Get list success", data=leave_request_list)
 
     @staticmethod
     def create(db: Session, token,leaveType_id ,leave_data: LeaveRequestBase) -> LeaveRequestOut:

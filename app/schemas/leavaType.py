@@ -6,6 +6,7 @@ from typing import List, Optional
 
 
 # ====== LeaveType Schemas ======
+
 class LeaveTypeBase(BaseModel):
     type_name: Optional[str] = None
     description: Optional[str] = None
@@ -20,13 +21,17 @@ class LeaveTypeCreate(LeaveTypeBase):
 
 class LeaveTypeOut(LeaveTypeBase):
     class Config:
-        from_attributes = True
+        model_config = {
+        "from_attributes": True  # Cách mới
+    }
         
 class LeaveTypeResponse(BaseModel):
     message: str
     data: LeaveTypeOut
     class Config:
-        from_attributes = True
+        model_config = {
+        "from_attributes": True  # Cách mới
+    }
 
 
 class List_LeaveTypeOut(BaseModel):
@@ -34,5 +39,8 @@ class List_LeaveTypeOut(BaseModel):
     data: List[LeaveType]
 
     class Config:
-        from_attributes = True
-        orm_mode = True
+        # from_attributes = True
+        # orm_mode = True
+        model_config = {
+        "from_attributes": True  # Cách mới
+    }

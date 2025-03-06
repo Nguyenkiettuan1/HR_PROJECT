@@ -6,11 +6,11 @@ from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from app.schemas.auth import UserOut, Signup,TokenResponse, LoginForm
 
 
-router = APIRouter(tags=["Auth"], prefix="/auth")
+router = APIRouter(tags=["auth"], prefix="/auth")
 
 
 @router.post("/signup", status_code=status.HTTP_200_OK, response_model=UserOut)
-async def user_login(
+async def user_signup(
         user: Signup,
         db: Session = Depends(get_db)):
     return await AuthService.signup(db, user)

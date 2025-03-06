@@ -8,6 +8,7 @@ class ResponseHandler:
             return data
         else:
             return {"message": message, "data": data}
+        
     @staticmethod
     def get_single_success(name, id, data):
         message = f"Details for {name} with id {id}"
@@ -50,3 +51,6 @@ class ResponseHandler:
     @staticmethod
     def error(message = ""):
         raise HTTPException(status_code= status.HTTP_400_BAD_REQUEST, detail=message)
+    @staticmethod
+    def responseEntity(data, message, status):
+        return {"data": data, "message": message, "status_code": status}

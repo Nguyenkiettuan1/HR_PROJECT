@@ -1,6 +1,6 @@
 
 from fastapi import FastAPI
-from app.routers import users, auth, leavatype, leaveRequest        
+from app.routers import approve, users, auth, leavatype, leaveRequest        
 
 
 
@@ -19,4 +19,5 @@ app.include_router(auth.router)
 app.include_router(users.router)
 app.include_router(leavatype.router)
 app.include_router(leaveRequest.router)
+app.include_router(approve.router)
 

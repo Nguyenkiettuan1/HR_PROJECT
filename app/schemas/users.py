@@ -27,15 +27,20 @@ class UserOut(UserBase):
     created_at: datetime
 
     class Config:
-        from_attributes=True
-        orm_mode = True  
+        # from_attributes=True
+        # orm_mode = True  
+        model_config = {
+        "from_attributes": True  # Cách mới
+    }
 
 class Userinfo(UserBase):
     id: uuid.UUID
     created_at: datetime
 
     class Config:
-        from_attributes=True
+        model_config = {
+        "from_attributes": True  # Cách mới
+    }
 
 
 # Schema phản hồi API khi lấy thông tin User
@@ -44,8 +49,11 @@ class UserResponse(BaseModel):
     data: UserOut
 
     class Config:
-        from_attributes = True
-        orm_mode = True  
+        # from_attributes = True
+        # orm_mode = True  
+        model_config = {
+        "from_attributes": True  # Cách mới
+    }
 
 class UserUpdate(BaseModel):
     full_name: Optional[str] = None
@@ -53,4 +61,6 @@ class UserUpdate(BaseModel):
     password_new: Optional[str] = None
 
     class Config:
-        from_attributes = True      
+        model_config = {
+        "from_attributes": True  # Cách mới
+    }      

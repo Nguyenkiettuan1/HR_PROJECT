@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends
+import uuid
+from fastapi import APIRouter, Depends, Query
 from typing import Optional
 from app.db.database import get_db
 from app.services.leaveRequest import leaveRequest
@@ -22,10 +23,12 @@ def get_my_info(
 
 @router.post("/create", response_model=LeaveRequestOut, status_code=201)
 def create_leave_type(
-        leave_type_id: str ,
-        leave_request: LeaveRequestCreate,
+        leave_type_id: uuid.UUID = Query(...),
+        leave_request: LeaveRequestCreate = Depends(),  # Đọc từ body
         db: Session = Depends(get_db),
         token: HTTPAuthorizationCredentials = Depends(auth_scheme)):
+    print(leave_request)
+    print(leave_type_id)
     return leaveRequest.create(db, token, leave_type_id,leave_request)
 
 # @router.put("/edit/{id}", response_model=LeaveTypeResponse)

@@ -2,7 +2,9 @@ import uuid
 from pydantic import BaseModel, EmailStr
 from datetime import datetime, date
 from typing import List, Optional
-from leavaRequest import LeaveRequestOut
+
+from app.models.models import LeaveRequest
+# from app.schemas.leavaRequest import LeaveRequestOut
 from app.schemas.users import UserOut
 
 
@@ -21,8 +23,15 @@ class ApprovalCreate(ApprovalBase):
 class ApprovalOut(ApprovalBase):
     id: uuid.UUID
     decision_date: datetime
-    leave_request: LeaveRequestOut
-    approver: UserOut
+    leave_request: LeaveRequest
+    approver_id: str
 
-    class Config:
-        from_attributes = True
+    model_config = {
+        "from_attributes": True,  # Cách mới
+        "arbitrary_types_allowed": True  # Cho phép kiểu tùy ý
+    }
+        
+class ApprovalResponse(BaseModel):
+    data: str
+    message: str
+    status: str

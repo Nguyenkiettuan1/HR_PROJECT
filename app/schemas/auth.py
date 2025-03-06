@@ -5,7 +5,9 @@ from typing import List
 
 # Base
 class BaseConfig:
-    from_attributes = True
+    model_config = {
+        "from_attributes": True  # Cách mới
+    }
 
 
 class UserBase(BaseModel):
